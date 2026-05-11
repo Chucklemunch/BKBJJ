@@ -38,7 +38,7 @@ export function Footer() {
           </h4>
           <address className="mt-3 not-italic text-cream/85 text-sm leading-relaxed">
             711 Rethke Ave<br />
-            Suite 2<br />
+            Suite 3<br />
             Madison, WI 53714
           </address>
         </div>
