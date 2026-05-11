@@ -1,26 +1,143 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ink: #0d0c0a;
+  --color-ink-deep: #050403;
+  --color-gold: #e3b341;
+  --color-gold-bright: #f5cd5b;
+  --color-gold-deep: #a47915;
+  --color-cream: #f4ead5;
+  --color-paper: #fef6e0;
+  --color-rust: #c44d2f;
+  --color-moss: #5b6e3f;
+  --color-whisker: #d4c4a0;
+
+  --font-display: "Alfa Slab One", "Georgia", serif;
+  --font-poster: "Bowlby One SC", "Impact", sans-serif;
+  --font-body: "Fraunces", "Iowan Old Style", "Georgia", serif;
+  --font-script: "Caveat", "Comic Sans MS", cursive;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html, body {
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-variation-settings: "opsz" 14, "SOFT" 50, "WONK" 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Aged paper grain texture overlay */
+.grain {
+  position: relative;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(rgba(255, 240, 200, 0.5) 1px, transparent 1px),
+    radial-gradient(rgba(0, 0, 0, 0.4) 1px, transparent 1px);
+  background-size: 3px 3px, 7px 7px;
+  background-position: 0 0, 2px 4px;
+}
+
+/* Subtle gold edge for badges/borders */
+.gold-rule {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-gold-deep) 8%,
+    var(--color-gold) 50%,
+    var(--color-gold-deep) 92%,
+    transparent 100%
+  );
+}
+
+/* Sliced display lettering with offset shadow */
+.display-shadow {
+  text-shadow:
+    4px 4px 0 var(--color-ink-deep),
+    6px 6px 0 var(--color-rust);
+}
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50%      { transform: rotate(1.5deg); }
+}
+.wiggle { animation: wiggle 4s ease-in-out infinite; }
+
+@keyframes float-up {
+  0%   { transform: translateY(0) scale(1); opacity: 0.0; }
+  10%  { opacity: 0.7; }
+  100% { transform: translateY(-220px) scale(1.4); opacity: 0; }
+}
+.bubble {
+  animation: float-up 7s ease-in infinite;
+}
+
+@keyframes draw-stamp {
+  from { transform: rotate(-12deg) scale(2); opacity: 0; }
+  to   { transform: rotate(-12deg) scale(1); opacity: 1; }
+}
+.stamp { animation: draw-stamp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+@keyframes reveal-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.reveal-up { animation: reveal-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+/* Hand-drawn underline */
+.hand-underline {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'%3E%3Cpath d='M2 7 Q 50 2 100 6 T 198 5' stroke='%23e3b341' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
+  background-size: 100% 0.5em;
+  padding-bottom: 0.15em;
+}
+
+/* Polaroid card */
+.polaroid {
+  background: var(--color-paper);
+  padding: 14px 14px 56px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 16px 30px -10px rgba(0,0,0,0.7),
+    0 4px 0 rgba(0,0,0,0.25);
+  border-radius: 2px;
+}
+
+/* Custom cursor for fun areas */
+.paw-cursor {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 32 32'%3E%3Cg fill='%23e3b341' stroke='%230d0c0a' stroke-width='1.5'%3E%3Cellipse cx='16' cy='22' rx='8' ry='6'/%3E%3Ccircle cx='8' cy='13' r='3'/%3E%3Ccircle cx='16' cy='9' r='3'/%3E%3Ccircle cx='24' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E") 14 14, pointer;
+}
+
+/* Decorative belt stripe */
+.belt-tape {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-ink) 0 16px,
+    var(--color-gold) 16px 18px,
+    var(--color-ink) 18px 34px,
+    var(--color-rust) 34px 36px
+  );
 }
