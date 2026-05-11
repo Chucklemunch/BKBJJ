@@ -23,7 +23,7 @@ const CREW: Member[] = [
     src: "/crew/dave.jpg",
     alt: "Three more crewmates squeezing into a selfie after open mat",
     name: "open mat crew",
-    quirk: "we lick to mats clean",
+    quirk: "we lick the mats clean",
     rotate: "rotate-2",
     objectPosition: "center 40%",
   },
